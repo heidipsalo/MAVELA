@@ -37,7 +37,7 @@ def main():
     end_time = f"{settings.year}-12-31 23:00"
 
     # downloading station based weather data (wind)
-    if download_now == 'Y':
+    if (download_now == 'Y' or download_now == 'N'):
         fmi_attempts = 0
         while fmi_attempts <= FMI_STATION_LIMIT:
             if fmi_attempts == FMI_STATION_LIMIT:
