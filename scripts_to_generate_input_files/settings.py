@@ -123,13 +123,13 @@ def init():
         top_layer_soil = input("What is your top layer soil type (clay, silt and peat soils are available at the moment)?\n").capitalize()
         user_inputs["top_layer_soil"] = top_layer_soil
 
-        macros_top_soil = input("What is your top layer soil macropores size (sizes available high and low)?\n").capitalize()
+        macros_top_soil = input("What is your top layer soil macropore amount (high or low)?\n").capitalize()
         user_inputs["macros_top_soil"] = macros_top_soil
 
         bottom_layer_soil = input("What is your bottom layer soil type (clay, silt and peat soils are available at the moment)?\n").capitalize()
         user_inputs["bottom_layer_soil"] = bottom_layer_soil
 
-        macros_bottom_soil = input("What is your bottom layer soil macropores size (sizes available high and low)?\n").capitalize()
+        macros_bottom_soil = input("What is your bottom layer soil macropore amount (high or low)?\n").capitalize()
         user_inputs["macros_bottom_soil"] = macros_bottom_soil
 
       df_user_inputs = pd.DataFrame(data=user_inputs, index=[0])
