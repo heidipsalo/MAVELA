@@ -17,15 +17,34 @@ copy "..\..\flush_03_cd\Release\data\input\report.txt" "..\..\flush_03_cd\Releas
 REM ren "output\log.txt" "log_base.txt"
 
 echo Run again [Enter], quit [CTRL-c]
-
 pause
 
+REM First modified run.
 python runner.py
-
-REM compare the simulation results between the base simulation and the modified setup
-
 python ..\compare_results.py
-
 echo Run again [Enter], quit [CTRL-c]
+pause
 
+REM Second modified run.
+python runner.py
+python ..\compare_results.py
+echo Run again [Enter], quit [CTRL-c]
+pause
+
+REM Third modified run.
+python runner.py
+python ..\compare_results.py
+echo Run again [Enter], quit [CTRL-c]
+pause
+
+REM Forth modified run.
+python runner.py
+python ..\compare_results.py
+echo Run again [Enter], quit [CTRL-c]
+pause
+
+REM Fifth modified run.
+python runner.py
+python ..\compare_results.py
+echo Run again [Enter], quit [CTRL-c]
 pause
