@@ -18,7 +18,7 @@ FMI_STATION_LIMIT = 50
 def main():
     settings.init()  # asking user for input parameters
 
-    download_now = input("Do you want to download FMI data now? (Y/N): ").capitalize()
+    download_now = input("Do you want to download FMI gridded data now? (Y/N): ").capitalize()
     if download_now == 'Y':
         download_gridded_data()  # downloading gridded data
 
@@ -43,7 +43,7 @@ def main():
             if fmi_attempts == FMI_STATION_LIMIT:
                 raise RuntimeError("No data available for searched weather stations!")
 
-            print(f"Downloading weather data from FMI...(attempt #{fmi_attempts+1})")
+            print(f"Downloading wind data from FMI...(attempt #{fmi_attempts+1})")
             start_downloading_time = time.time()
             try:
                 weather_daily_data = download_weather_data(

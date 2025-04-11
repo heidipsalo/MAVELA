@@ -1,6 +1,7 @@
 import pandas as pd
 from download_and_format_input_files_helper import fix_path
 import os
+from plot_location_on_map import show_location_on_map
 
 
 def init():
@@ -137,6 +138,8 @@ def init():
     # User inputs will be saved to a report-file. 
     # Also modified parameters will be saved, if parameters are loaded from file.
     df_user_inputs.to_csv(fix_path(input_folder) + "report.txt")
+    
+    show_location_on_map(coordinates[1], coordinates[0])
 
     if user_soil == "N":
       import soil_param_user
@@ -198,6 +201,9 @@ def create_folders(flush_dir):
         os.makedirs(input_dir)
         os.makedirs(plots_dir)
         os.makedirs(output_dir)
+    except FileExistsError:
+        # directory already exists
+        pass
     except OSError as iex:
         print(f"Creation of directories failed! {iex}")
 

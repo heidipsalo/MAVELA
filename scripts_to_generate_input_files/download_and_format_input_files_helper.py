@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import netCDF4 as nc
 import datetime as dt
+import time
 import cftime
 import os
 import requests
@@ -137,6 +138,7 @@ def fix_path(path):
 
 def download_file(url, save_path=None):
     try:
+        start = time.time()
         local_filename = url.split('/')[-1]
         if save_path is not None:
             local_filename = fix_path(save_path) + local_filename
@@ -146,6 +148,8 @@ def download_file(url, save_path=None):
             with open(local_filename, 'wb') as f:
                 for chunk in r.iter_content(chunk_size=CHUNK_SIZE):
                     f.write(chunk)
+        end = time.time()
+        print("Gridded {} data downloaded in {} s".format(local_filename, end-start))
     except Exception as e:
         print(e)
 

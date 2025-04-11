@@ -11,9 +11,9 @@ DAYS_IN_MONTH = 30
 
 
 def modify_data(df, year, period):
-    start, end = period.split("-")
-    start_month, start_day = start.split(".")
-    end_month, end_day = end.split(".")
+    start, end = period.split(" ")
+    start_month, start_day = start.split("-")
+    end_month, end_day = end.split("-")
 
     start_pd = pd.Timestamp(year=int(year), month=int(start_month), day=int(start_day))
     end_pd = pd.Timestamp(year=int(year), month=int(end_month), day=int(end_day))
@@ -86,7 +86,7 @@ def generate_defaults(extended_df, output_directory):
     )
     if settings.drain_type == "Control":
         df['Date'] = pd.Timestamp(f'{settings.year}-01-01') + pd.to_timedelta(df.index, unit='H')
-        periods = settings.control_time.split(" ")
+        periods = settings.control_time.split(".")
         for period in periods:
             modify_data(df, settings.year, period)
         df = df.drop('Date', axis=1)
