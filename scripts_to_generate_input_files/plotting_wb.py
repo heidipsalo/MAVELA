@@ -33,7 +33,7 @@ def read_and_convert(input_file_path, year, drain_spacing, start, end):
     discharge_to_open_ditch_data = df[['sDit_0','sDit_1']].sum(axis=1)
     drain_discharge_data = df[['sDra_0','sDra_1']].sum(axis=1)
     surface_runoff_data = df['oDit_0']
-    snow_water_eq = df['oSnWaVo']
+    snow_water_eq = df['oSnWaVo'] / drain_spacing**2 * 1000
 
     return (
         df, precip_data, evap_data, discharge_to_open_ditch_data,
