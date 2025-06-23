@@ -126,12 +126,16 @@ def init():
 
         macros_top_soil = input("What is your top layer soil macropore amount (high or low)?\n").capitalize()
         user_inputs["macros_top_soil"] = macros_top_soil
+        
+        ## Add input of top layer Ksat 
 
         bottom_layer_soil = input("What is your bottom layer soil type (clay, silt and peat soils are available at the moment)?\n").capitalize()
         user_inputs["bottom_layer_soil"] = bottom_layer_soil
 
         macros_bottom_soil = input("What is your bottom layer soil macropore amount (high or low)?\n").capitalize()
         user_inputs["macros_bottom_soil"] = macros_bottom_soil
+        
+        ## Add input of bottom layer Ksat
 
       df_user_inputs = pd.DataFrame(data=user_inputs, index=[0])
     
@@ -139,7 +143,7 @@ def init():
     # Also modified parameters will be saved, if parameters are loaded from file.
     df_user_inputs.to_csv(fix_path(input_folder) + "report.txt")
     
-    show_location_on_map(coordinates[1], coordinates[0])
+    #show_location_on_map(coordinates[1], coordinates[0])
 
     if user_soil == "N":
       import soil_param_user

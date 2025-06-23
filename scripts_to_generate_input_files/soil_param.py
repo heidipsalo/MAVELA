@@ -31,15 +31,29 @@ soil_dict = {
 
 df = pd.DataFrame(soil_dict)
 
+df = pd.read_csv('soil_library/soil_data_maaperakolmio.csv')
+print(df)
+
 # Creating dt_soillib_water_01.txt and dt_soillib_geom_01.txt
-first_row = df.query("Layer.str.startswith('Top') & Type == @settings.top_layer_soil & Macros == @settings.macros_top_soil")
-second_row = df.query("Layer.str.startswith('Bot') & Type == @settings.bottom_layer_soil & Macros == @settings.macros_bottom_soil")
+top_soil = df.query("Soiltype == @settings.top_layer_soil")
+bottom_soil = df.query("Soiltype == @settings.bottom_layer_soil")
+#first_row = df.query("Layer.str.startswith('Top') & Type == @settings.top_layer_soil & Macros == @settings.macros_top_soil")
+#second_row = df.query("Layer.str.startswith('Bot') & Type == @settings.bottom_layer_soil & Macros == @settings.macros_bottom_soil")
 #print(second_row)
-output_line = pd.concat([first_row, second_row], ignore_index = True)
+output_line = pd.concat([top_soil, bottom_soil], ignore_index = True)
 #print(output_line)
-output_line.drop(['Layer', 'Type', 'Macros'], axis=1, inplace=True)
-geom_params = output_line[['ThetaS', 'Compr.', 'w', 'Dry we.', 'Density']].copy()
-water_params = output_line.drop(['ThetaS', 'Compr.', 'w', 'Dry we.', 'Density'], axis=1)
+output_line.drop(['Soiltype'], axis=1, inplace=True)
+geom_params = output_line[['ThetaS', 'Compr', 'w', 'Dry we', 'Density']].copy()
+water_params = output_line.drop(['ThetaS', 'Compr', 'w', 'Dry we', 'Density'], axis=1)
+
+## Change w values for top and bottom soil based on user input.
+geom_params['w'] = (settings.macros_top_soil, settings.macros_bottom_soil)
+
+## Calculate KvF values based on user given w values.
+water_params['KvF'] = geom_params['w'] * water_params['ConMulF']
+
+## Change KvM values based on user input.
+water_params['KvM'] = (settings.matrix_ksat_top_soil, settings.matrix_ksat_bottom_soil)
 
 out_txt = fix_path(settings.input_folder) + 'dt_soillib_geom_01.txt'
 geom_params.to_csv(out_txt, sep='\t', header=True)
