@@ -11,7 +11,16 @@ def init():
     global flush_bat_str, dir_flush, input_file_path_plots, plots_folder, location, year, coordinates, veg_season, drain_spacing, slope, temp_folder, input_folder, drain_type, control_level, control_time
     global top_layer_soil, macros_top_soil, bottom_layer_soil, macros_bottom_soil, user_depth, user_soil, open_ditch, open_ditch_dist
 
-    dir_flush = r"C:\Users\hpsalo\Mavela\flush_03_cd\Release"
+    folder_exists = False
+    while (folder_exists == False):
+        dir_flush = input("Give path to the Flush folder:\n")
+        if os.path.exists(dir_flush):
+            folder_exists = True
+        else:
+            print("Folder does not exist. Check the folder path.")
+    
+
+    #dir_flush = r"C:\Users\hpsalo\Mavela\flush_03_cd\Release"
     temp_folder, input_folder, plots_folder, output_dir = create_folders(dir_flush)
 
     input_file_path_plots = fr"{output_dir}\log.txt"
@@ -25,6 +34,15 @@ def init():
 
     use_file = input("Load user inputs from the file? (Y/N):\n").capitalize()
     if use_file == 'Y':
+      
+      file_exists = False
+      while (file_exists == False):
+          input_file_path = input("Give the path to the file:\n")
+          if os.path.isfile(input_file_path):
+              file_exists = True
+          else:
+              print("File does not exist. Check the file path.")
+      
       open_ditch_dist, open_ditch, location, year, coordinates, veg_season, drain_spacing, slope, drain_type, control_level, control_time, user_depth, user_soil, top_layer_soil, macros_top_soil, bottom_layer_soil, macros_bottom_soil, df_user_inputs = download_input_from_file(input_file_path)
       
       # Print information for the user about the current parameters.
@@ -60,17 +78,23 @@ def init():
           user_soil = input("Do you want to use available soil libraries? (Y/N):\n ").capitalize()
           df_user_inputs["user_soil"] = user_soil
           if user_soil == "Y":
-            top_layer_soil = input("What is your top layer soil type (clay, silt and peat soils are available at the moment)?\n").capitalize()
+            top_layer_soil = input("Select top layer soil type.\n").capitalize()
             df_user_inputs["top_layer_soil"] = top_layer_soil
 
-            macros_top_soil = input("What is your top layer soil macropores size (sizes available high and low)?\n").capitalize()
+            macros_top_soil = input("What is the share of macropores of the total pore volume?\n").capitalize()
             df_user_inputs["macros_top_soil"] = macros_top_soil
+            
+            ksat_top_soil = input("What is the saturated hydraulic conductivity of top soil (give the value in m/h)?")
+            df_user_inputs["ksat_top_soil"] = ksat_top_soil
 
-            bottom_layer_soil = input("What is your bottom layer soil type (clay, silt and peat soils are available at the moment)?\n").capitalize()
+            bottom_layer_soil = input("Select bottom layer soil type.\n").capitalize()
             df_user_inputs["bottom_layer_soil"] = bottom_layer_soil
 
-            macros_bottom_soil = input("What is your bottom layer soil macropores size (sizes available high and low)?\n").capitalize()
+            macros_bottom_soil = input("What is the share of macropores of the total pore volume?\n").capitalize()
             df_user_inputs["macros_bottom_soil"] = macros_bottom_soil
+            
+            ksat_bottom_soil = input("What is the saturated hydraulic conductivity of bottom soil (give the value in m/h)?")
+            df_user_inputs["ksat_bottom_soil"] = ksat_bottom_soil
 
 
     else:
@@ -117,25 +141,34 @@ def init():
       if open_ditch == "Y":
         open_ditch_dist = float(input("What is the distance to open ditch (m)?\n"))
         user_inputs["open_ditch_dist"] = open_ditch_dist
-
+      
+      ## TODO: replace this part with the three options in LUKE's soil library.
       user_soil = input("Do you want to use available soil libraries? (Y/N):\n ").capitalize()
       user_inputs["user_soil"] = user_soil
       if user_soil == "Y":
-        top_layer_soil = input("What is your top layer soil type (clay, silt and peat soils are available at the moment)?\n").capitalize()
+        
+        print("Available soil types, range of macropores and saturated hydraulic conductivities:\n")
+        df_available_soils = pd.read_csv('soil_library/available_soiltypes.csv')
+        print(df_available_soils.iloc[:,1:])
+        ## TODO: Add here table that shows the available soil types, suggested macroporosities and Ksats.
+        top_layer_soil = input("Select top layer soil type.\n").capitalize()
         user_inputs["top_layer_soil"] = top_layer_soil
 
-        macros_top_soil = input("What is your top layer soil macropore amount (high or low)?\n").capitalize()
+        macros_top_soil = input("What is the share of macropores of the total pore volume?\n").capitalize()
         user_inputs["macros_top_soil"] = macros_top_soil
         
-        ## Add input of top layer Ksat 
+        ksat_top_soil = input("What is the saturated hydraulic conductivity of top soil (give the value in m/h)?")
+        user_inputs["ksat_top_soil"] = ksat_top_soil
 
-        bottom_layer_soil = input("What is your bottom layer soil type (clay, silt and peat soils are available at the moment)?\n").capitalize()
+        bottom_layer_soil = input("Select bottom layer soil type.\n").capitalize()
         user_inputs["bottom_layer_soil"] = bottom_layer_soil
 
-        macros_bottom_soil = input("What is your bottom layer soil macropore amount (high or low)?\n").capitalize()
+        macros_bottom_soil = input("What is the share of macropores of the total pore volume?\n").capitalize()
         user_inputs["macros_bottom_soil"] = macros_bottom_soil
         
-        ## Add input of bottom layer Ksat
+        ksat_bottom_soil = input("What is the saturated hydraulic conductivity of bottom soil (give the value in m/h)?")
+        user_inputs["ksat_bottom_soil"] = ksat_bottom_soil
+
 
       df_user_inputs = pd.DataFrame(data=user_inputs, index=[0])
     

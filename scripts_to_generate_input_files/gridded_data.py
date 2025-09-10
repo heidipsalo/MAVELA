@@ -22,6 +22,17 @@ def download_gridded_data():
     end_downloading_time = time.time()
     print("Gridded data downloaded in {} s".format(end_downloading_time-start_downloading_time))
 
+    # urls = construct_gridded_urls(settings.year)
+    # start_downloading_time = time.time()
+
+    # for i in range (0,len(urls)):
+    #     start = time.time()
+    #     download_file(urls[i], settings.temp_folder)
+    #     end = time.time()
+    #     print("Gridded {} data downloaded in {} s".format(urls[i].split('/')[-1], end-start))
+    # end_downloading_time = time.time()
+    # print("Gridded data downloaded in {} s".format(end_downloading_time-start_downloading_time))
+
 
 def process_and_save_gridded_data(files, filenames):
     for file, filename in zip(files, filenames):

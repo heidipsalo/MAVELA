@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 def show_location_on_map(N, E):
     
     # Define the coordinate in EPSG:3067
-    point_epsg3067 = Point(E,N)  # Replace with your own coordinates
+    point_epsg3067 = Point(float(E),float(N))  # Replace with your own coordinates
     
     # Create a GeoDataFrame with the point
     gdf_point = gpd.GeoDataFrame(geometry=[point_epsg3067], crs="EPSG:3067")
