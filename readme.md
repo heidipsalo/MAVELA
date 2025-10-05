@@ -11,21 +11,21 @@ User can define the following parameters for the simulated field:
 
 # Requirements
 - Python packages:
-	-customtkinter==5.2.2
-	-future==0.18.3
-	-numpy==1.24.2
-	-pandas==2.0.2
-	-datetime==5.4
-	-geopandas==0.14.3
-	-rasterio==1.3.9
-	-shapely==2.0.2
-	-plotly==5.15.0
-	-matplotlib==3.6.3
-	-pyproj==3.6.1
-	-netcdf4==1.6.5
-	-cftime==1.6.3
-	-requests==2.28.2
-	-defusedxml==0.7.1
+	- customtkinter==5.2.2
+	- future==0.18.3
+	- numpy==1.24.2
+	- pandas==2.0.2
+	- datetime==5.4
+	- geopandas==0.14.3
+	- rasterio==1.3.9
+	- shapely==2.0.2
+	- plotly==5.15.0
+	- matplotlib==3.6.3
+	- pyproj==3.6.1
+	- netcdf4==1.6.5
+	- cftime==1.6.3
+	- requests==2.28.2
+	- defusedxml==0.7.1
 - Flush-model: git@github.com:heidipsalo/Flush.git
 
 # Running the MAVELA tool (Windows)
@@ -51,19 +51,19 @@ There are three option to do a simulation: 1) You can create a new simulation in
 6. Give the size of the drain spacing (in meters)
 7. Give the slope of your field (in %)
 8. Give the depth of the subsurface drainage (in meters, min. 0.02 m and max 1.9 m)
-9a. Select if you want to simulate conventional or controlled dranage (type conventional/control)
-9b. If you selected control, give the 
-10a. Select if you want to include open ditch in your simulation.
-10b. Give the distance from field to open ditch
+9. Select if you want to simulate conventional or controlled dranage (type conventional/control)
+9. If you selected control, give the control preriod (MM-DD MM-DD)
+10. Select if you want to include open ditch in your simulation.
+10. Give the distance from field to open ditch
 11.Select if you want to use available soil libraries?
-11a.If you select no (N), Empty soil files are generated in the input folder. Please add your soil parameters in: 
+11.If you select no (N), Empty soil files are generated in the input folder. Please add your soil parameters in: 
 - geom_layers_01.txt 
 - dt_soillib_geom_01.txt 
 - dt_soillib_water_01.txt 
 - dt.soillib_crack_01.txt 
 - dt_soillib_solute_01.txt 
 - dt_soillib_heat_01.txt 
-11b. If you select yes (Y), you can choose from the given options the soil type for top soil (above the drain depth) and bottom soil (below the drain depth).
+11. If you select yes (Y), you can choose from the given options the soil type for top soil (above the drain depth) and bottom soil (below the drain depth).
 12. Select if you want to download FMI gridded data now. NOTE that the downloading takes a moment and depends on your internet connection. You do not need to download the gridded dara if you already have downloaded the data for the simulated year previously. You can check if you have that data from Release/data/temp-folder.
 13. The Flush simulation will be run automatically after the input files are created based on your choices made for the model run. 
 14. After the model run is finished, you can determine which variables you want to plot by following the instructions given by the tool.
